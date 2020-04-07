@@ -1,0 +1,45 @@
+server:
+  port: 18083
+spring:
+  main:
+    ## @FeignClient(value = "服务名r") 设置可以有多个类存在相同的FeignClient 中的value值
+    allow-bean-definition-overriding: true
+  application:
+    name: canal
+  #----------热部署相关配置--start--------
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+  freemarker:
+    cache: false    #页面不加载缓存，修改即时生效
+  #----------热部署相关配置--end--------
+  redis:
+    host: 192.168.211.132
+    post: 6379
+debug: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+#hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          #如果enabled设置为false，则请求超时交给ribbon控制
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+#canal配置
+canal:
+  client:
+    instances:
+      example:
+        host: 192.168.211.132
+        port: 11111
