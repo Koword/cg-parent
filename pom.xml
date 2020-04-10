@@ -55,10 +55,27 @@
       <artifactId>springfox-swagger-ui</artifactId>
       <version>2.6.1</version>
     </dependency>
-
+    <!--热部署-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <optional>true</optional><!-- 防止将devtools依赖传递到其他模块中 -->
+    </dependency>
 
     <!--http://localhost:9011/swagger-ui.html-->
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <fork>true</fork>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
   <dependencyManagement>
     <dependencies>

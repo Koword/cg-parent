@@ -1907,13 +1907,13 @@
 					</div>
 					<div class="clearfix choose">
 						<div id="specification" class="summary-wrap clearfix">
-							<dl th:each="spec:${specificationList}">
+							<dl th:each="spec,specStat:${specificationList}">
 								<dt>
 									<div class="fl title">
 										<i th:text="${spec.key}"></i>
 									</div>
 								</dt>
-								<dd>
+								<dd th:each="arrValue:${specStat.current.value}">
 									<a href="javascript:;" th:@click="|selecteSpecification('${spec.key}','${op}')|" th:v-bind:class="|sel('${spec.key}','${op}')|" th:each="op:${spec.value}">
 										<em th:text="${op}"></em>
 										<span title="点击取消选择">&nbsp;</span>

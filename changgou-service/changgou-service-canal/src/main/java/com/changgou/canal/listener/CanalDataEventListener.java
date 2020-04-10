@@ -1,16 +1,19 @@
-package com.changgou.listener;
+package com.changgou.canal.listener;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.otter.canal.protocol.CanalEntry.Column;
 import com.alibaba.otter.canal.protocol.CanalEntry.EntryType;
 import com.alibaba.otter.canal.protocol.CanalEntry.EventType;
 import com.alibaba.otter.canal.protocol.CanalEntry.RowData;
+import com.changgou.canal.mq.queue.TopicQueue;
+import com.changgou.canal.mq.send.TopicMessageSender;
 import com.changou.content.feign.ContentFeign;
 import com.changou.content.pojo.Content;
 import com.xpand.starter.canal.annotation.CanalEventListener;
 import com.xpand.starter.canal.annotation.DeleteListenPoint;
 import com.xpand.starter.canal.annotation.ListenPoint;
 import com.xpand.starter.canal.annotation.UpdateListenPoint;
+import entity.Message;
 import entity.Result;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -26,8 +29,24 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 public class CanalDataEventListener {
 
     ContentFeign contentFeign;
-
     StringRedisTemplate stringRedisTemplate;
+    TopicMessageSender topicMessageSender;
+
+    @ListenPoint(destination = "example", schema = "changgou_goods", table = {"tb_spu"}, eventType = {EventType.UPDATE,
+        EventType.DELETE})
+    public void onEventCustomerSpu(EventType eventType, RowData rowData) {
+
+        // 操作类型
+        int number = eventType.getNumber();
+        // 操作的数据
+        String id = getColumnValue(rowData, "id");
+        // 封装Message
+        Message msg = Message.createMsg(number, id, TopicQueue.TOPIC_QUEUE_SPU,
+            TopicQueue.TOPIC_EXCHANGE_SPU);
+        // 发送消息
+        topicMessageSender.sendMessage(msg);
+    }
+
 
     /**
      * @Description 自定义监听器
@@ -108,5 +127,9 @@ public class CanalDataEventListener {
         }
     }
 
+    public String getColumn(RowData rowData ,String name){
+        // 操作后的数据
+        return null;
+    }
 
 }

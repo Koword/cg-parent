@@ -22,6 +22,14 @@ public class PageController {
 
     PageService pageService;
 
+
+    /**
+     * @Description 生成静态页
+     * @Author tangKai
+     * @Date 12:58 2020/4/10
+     * @param id
+     * @Return entity.Result
+     **/
     @GetMapping("/createHtml/{id}")
     public Result createHtml(@PathVariable(name = "id") Long id){
         pageService.creatrHtml(id);

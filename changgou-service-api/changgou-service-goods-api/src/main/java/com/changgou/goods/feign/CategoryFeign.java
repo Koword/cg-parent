@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Date 12:48 2020/4/8
  **/
 @FeignClient(name = "goods")
-@RequestMapping("/contentCategory")
+@RequestMapping("/category")
 public interface CategoryFeign {
 
 
@@ -24,5 +24,5 @@ public interface CategoryFeign {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<Category> findById(@PathVariable(value = "id") Integer id);
+    Result<Category> findById(@PathVariable(name = "id") Integer id);
 }

@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -27,12 +27,16 @@ import org.thymeleaf.context.Context;
  * @Date 14:21 2020/4/8
  **/
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 public class PageServiceImpl implements PageService {
 
+    @Autowired
     TemplateEngine templateEngine;
+    @Autowired
     SkuFeign skuFeign;
+    @Autowired
     SpuFeign spuFeign;
+    @Autowired
     CategoryFeign categoryFeign;
     @Value("${pagepath}")
     private String pagepath;
