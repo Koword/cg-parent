@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @E-mail tangkai@qingzu.com.cn
  * @Date 12:56 2020/4/10
  **/
-@FeignClient(name="item")
+@FeignClient(name = "item")
 @RequestMapping("/page")
 public interface PageFeign {
 
@@ -21,9 +21,11 @@ public interface PageFeign {
      * @Description 生成静态页
      * @Author tangKai
      * @Date 12:58 2020/4/10
-     * @param id
      * @Return entity.Result
      **/
     @GetMapping("/createHtml/{id}")
     Result createHtml(@PathVariable(name = "id") Long id);
+
+    @GetMapping("/deleteHtml/{id}")
+    Result deleteHtml(@PathVariable(name = "id") Long id);
 }

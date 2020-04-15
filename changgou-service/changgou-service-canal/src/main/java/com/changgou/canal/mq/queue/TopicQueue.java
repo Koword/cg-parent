@@ -15,34 +15,32 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 public class TopicQueue {
+
     public static final String TOPIC_QUEUE_SPU = "topic.queue.spu";
     public static final String TOPIC_EXCHANGE_SPU = "topic.exchange.spu";
 
 
     /**
      * Topic模式 spu变更队列
-     * @return
      */
     @Bean
-    public Queue topicQueue(){
+    public Queue topicQueueSpu() {
         return new Queue(TOPIC_QUEUE_SPU);
     }
 
     /**
      * spu 队列交换机
-     * @return
      */
     @Bean
-    public TopicExchange topicExchange(){
+    public TopicExchange topicSpuExchange() {
         return new TopicExchange(TOPIC_EXCHANGE_SPU);
     }
 
     /**
      * 队列绑定交换机
-     * @return
      */
     @Bean
-    public Binding topicBinding(){
-        return BindingBuilder.bind(topicQueue()).to(topicExchange()).with(TOPIC_QUEUE_SPU);
+    public Binding topicBinding1() {
+        return BindingBuilder.bind(topicQueueSpu()).to(topicSpuExchange()).with(TOPIC_QUEUE_SPU);
     }
 }

@@ -142,7 +142,7 @@ public class ContentController {
      * @Return entity.Result
      **/
     @GetMapping("/list/category/{id}")
-    public Result findByCategory(@PathVariable(value = "id") Long id) {
+    public Result findByCategory(@PathVariable(name = "id") Long id) {
         List<Content> contentList = contentService.findByCategory(id);
         return new Result(true, StatusCode.OK, "根据分类id查询广告列表成功!", contentList);
     }

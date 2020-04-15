@@ -71,12 +71,19 @@ public class PageServiceImpl implements PageService {
 
     }
 
+    @Override
+    public void deleteHtml(Long spuId) {
+        if (spuId != null) {
+            templateEngine.clearTemplateCacheFor(spuId + ".html");
+        }
+    }
+
 
     /**
      * @Description
      * @Author tangKai
      * @Date 14:28 2020/4/8
-     * @Return java.util.Map<java.lang.String,*java.lang.Object>
+     * @Return java.util.Map<java.lang.String,java.lang.Object>
      **/
     private Map<String, Object> getDataModel(Long spuId) {
         // 商品信息

@@ -32,13 +32,18 @@ public class CanalDataEventListener {
     StringRedisTemplate stringRedisTemplate;
     TopicMessageSender topicMessageSender;
 
-    @ListenPoint(destination = "example", schema = "changgou_goods", table = {"tb_spu"}, eventType = {EventType.UPDATE,
-        EventType.DELETE})
+    /**
+     * @Description 规格、分类数据修改监听——————goodsDML操作商品之后item生成/删除静态详情页
+     * @Author tangKai
+     * @Date 10:55 2020/4/11
+     * @Return void
+     **/
+    @ListenPoint(destination = "example", schema = "changgou_goods", table = {"tb_spu"}, eventType = {
+        EventType.INSERT, EventType.UPDATE})
     public void onEventCustomerSpu(EventType eventType, RowData rowData) {
-
         // 操作类型
         int number = eventType.getNumber();
-        // 操作的数据
+        // 操作的数据，列对应的值
         String id = getColumnValue(rowData, "id");
         // 封装Message
         Message msg = Message.createMsg(number, id, TopicQueue.TOPIC_QUEUE_SPU,
@@ -49,7 +54,7 @@ public class CanalDataEventListener {
 
 
     /**
-     * @Description 自定义监听器
+     * @Description 自定义监听器——————广告业务
      * @Author tangKai
      * @Date 17:17 2020/1/4
      * @Return void
@@ -74,8 +79,15 @@ public class CanalDataEventListener {
      * @Return java.lang.String
      **/
     private String getColumnValue(RowData rowData, String columnName) {
-        List<Column> list = rowData.getAfterColumnsList();
-        for (Column column : list) {
+
+        // 操作之后的数据
+        for (Column column : rowData.getAfterColumnsList()) {
+            if (columnName.equals(column.getName())) {
+                return column.getValue();
+            }
+        }
+        // 操作前的数据
+        for (Column column : rowData.getBeforeColumnsList()) {
             if (columnName.equals(column.getName())) {
                 return column.getValue();
             }
@@ -127,9 +139,5 @@ public class CanalDataEventListener {
         }
     }
 
-    public String getColumn(RowData rowData ,String name){
-        // 操作后的数据
-        return null;
-    }
 
 }

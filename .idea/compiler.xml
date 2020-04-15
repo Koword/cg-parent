@@ -9,6 +9,7 @@
         <module name="changgou-common" />
         <module name="changgou-common-db" />
         <module name="changgou-eureka" />
+        <module name="changgou-gateway-web" />
         <module name="changgou-service-canal" />
         <module name="changgou-service-content" />
         <module name="changgou-service-content-api" />
@@ -30,6 +31,7 @@
       <module name="changgou-common-db" target="1.8" />
       <module name="changgou-eureka" target="1.8" />
       <module name="changgou-gateway" target="1.8" />
+      <module name="changgou-gateway-web" target="1.8" />
       <module name="changgou-parent" target="1.8" />
       <module name="changgou-service" target="1.8" />
       <module name="changgou-service-api" target="1.8" />

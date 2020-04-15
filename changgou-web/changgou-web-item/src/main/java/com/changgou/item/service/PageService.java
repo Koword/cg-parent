@@ -17,4 +17,6 @@ public interface PageService {
      * @Return
      **/
     void creatrHtml(Long spuId);
+
+    void deleteHtml(Long spuId);
 }

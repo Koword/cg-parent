@@ -23,7 +23,7 @@ public interface ContentFeign {
      * @Return entity.Result
      **/
     @GetMapping("/list/category/{id}")
-    public Result findByCategory(@PathVariable(value = "id") Long id);
+    Result findByCategory(@PathVariable(name = "id") Long id);
 
 
 
