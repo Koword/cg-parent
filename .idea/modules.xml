@@ -19,6 +19,8 @@
       <module fileurl="file://$PROJECT_DIR$/changgou-service/changgou-service-rabbitmq/changgou-service-rabbitmq.iml" filepath="$PROJECT_DIR$/changgou-service/changgou-service-rabbitmq/changgou-service-rabbitmq.iml" />
       <module fileurl="file://$PROJECT_DIR$/changgou-service/changgou-service-search/changgou-service-search.iml" filepath="$PROJECT_DIR$/changgou-service/changgou-service-search/changgou-service-search.iml" />
       <module fileurl="file://$PROJECT_DIR$/changgou-service-api/changgou-service-search-api/changgou-service-search-api.iml" filepath="$PROJECT_DIR$/changgou-service-api/changgou-service-search-api/changgou-service-search-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/changgou-service/changgou-service-user/changgou-service-user.iml" filepath="$PROJECT_DIR$/changgou-service/changgou-service-user/changgou-service-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/changgou-service-api/changgou-service-user-api/changgou-service-user-api.iml" filepath="$PROJECT_DIR$/changgou-service-api/changgou-service-user-api/changgou-service-user-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/changgou-web/changgou-web.iml" filepath="$PROJECT_DIR$/changgou-web/changgou-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/changgou-web/changgou-web-item/changgou-web-item.iml" filepath="$PROJECT_DIR$/changgou-web/changgou-web-item/changgou-web-item.iml" />
       <module fileurl="file://$PROJECT_DIR$/changgou-service-api/changgou-web-item-api/changgou-web-item-api.iml" filepath="$PROJECT_DIR$/changgou-service-api/changgou-web-item-api/changgou-web-item-api.iml" />

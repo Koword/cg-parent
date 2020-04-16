@@ -12,17 +12,33 @@ spring:
             - DELETE
       # 路由配置
       routes:
-          - id: changgou_goods_route
-#            uri: http://localhost:18081
-            uri: lb://goods
-            predicates:
-#            - Host=cloud.itheima.com**
-            - Path=/**
-            filters:
-#            - PrefixPath=/brand
-            - StripPrefix=1
+            - id: changgou_goods_route
+  #            uri: http://localhost:18081
+              uri: lb://goods
+              predicates:
+  #            - Host=cloud.itheima.com**
+              - Path=/api/brand/**
+              filters:
+  #            - PrefixPath=/brand
+              - StripPrefix=1
+              - name: RequestRateLimiter #请求数限流 名字不能随便写
+                args:
+                  key-resolver: "#{@ipKeyResolver}"
+                  redis-rate-limiter.replenishRate: 1
+                  redis-rate-limiter.burstCapacity: 1
+            #用户微服务
+            - id: changgou_user_route
+              uri: lb://user
+              predicates:
+              - Path=/api/user/**,/api/address/**,/api/areas/**,/api/cities/**,/api/provinces/**
+              filters:
+              - StripPrefix=1
   application:
     name: gateway-web
+  redis:
+    host: 192.168.211.132
+    port: 6379
+
 server:
   port: 8001
 eureka:

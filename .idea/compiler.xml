@@ -19,6 +19,8 @@
         <module name="changgou-service-rabbitmq" />
         <module name="changgou-service-search" />
         <module name="changgou-service-search-api" />
+        <module name="changgou-service-user" />
+        <module name="changgou-service-user-api" />
         <module name="changgou-web-item" />
         <module name="changgou-web-item-api" />
         <module name="changgou-web-search" />
@@ -44,6 +46,8 @@
       <module name="changgou-service-rabbitmq" target="1.8" />
       <module name="changgou-service-search" target="1.8" />
       <module name="changgou-service-search-api" target="1.8" />
+      <module name="changgou-service-user" target="1.8" />
+      <module name="changgou-service-user-api" target="1.8" />
       <module name="changgou-web" target="1.8" />
       <module name="changgou-web-item" target="1.8" />
       <module name="changgou-web-item-api" target="1.8" />

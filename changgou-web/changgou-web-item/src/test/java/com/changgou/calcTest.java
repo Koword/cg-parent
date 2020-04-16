@@ -1,5 +1,7 @@
 package com.changgou;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import org.assertj.core.util.DateUtil;
@@ -34,6 +36,26 @@ public class calcTest {
 
         int sum = 1 + bound;
         System.out.println(sum + bound);
+    }
+
+    @Test
+    public void before() throws ParseException {
+        String s1 = "2020-01-12 12:00:00";
+        String s2 = "2020-01-12 12:20:00";
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d1 = simpleDateFormat.parse(s1);
+        Date d2 = simpleDateFormat.parse(s2);
+
+//        Date d1 = DateUtil.parse(s1);
+//        Date d2 = DateUtil.parse(s2);
+
+        System.out.println("d1" + d1);
+        System.out.println("d2" + d2);
+
+        if (d1.before(d2)) {
+            System.out.println(true);
+        }
     }
 
 }
