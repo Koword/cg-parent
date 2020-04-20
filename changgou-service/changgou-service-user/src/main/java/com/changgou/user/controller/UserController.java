@@ -1,12 +1,20 @@
 package com.changgou.user.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
 import com.github.pagehelper.PageInfo;
 import entity.BCrypt;
+import entity.JwtUtil;
 import entity.Result;
 import entity.StatusCode;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,19 +41,31 @@ public class UserController {
     private UserService userService;
 
 
-
     /**
      * @Description 登陆
      * @Author tangKai
      * @Date 17:41 2020/4/16
-     * @param username
-     * @param password
      * @Return entity.Result
      **/
     @GetMapping("/login")
-    public Result login(String username, String password) {
+    public Result login(String username, String password, HttpServletRequest request, HttpServletResponse response) {
         User user = userService.findById(username);
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+            // 生成token
+            Map<String, Object> map = new HashMap<>();
+            map.put("role", "USER");
+            map.put("status", "SUCCESS");
+            map.put("userinfo", user);
+            String info = JSON.toJSONString(map);
+            String token = JwtUtil.createJWT(UUID.randomUUID().toString(), info, null);
+
+            // 用户登录成功后，生成token并且保存到head、cookie中
+            response.setHeader("Authorization", token);
+            Cookie cookie = new Cookie("Authorization", token);
+            cookie.setDomain("localhost");
+            cookie.setPath("/");
+            response.addCookie(cookie);
+
             return new Result(true, StatusCode.OK, "登陆成功");
         }
         return new Result(false, StatusCode.LOGINERROR, "账号或者密码错误");

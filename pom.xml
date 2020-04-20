@@ -67,8 +67,17 @@
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional><!-- 防止将devtools依赖传递到其他模块中 -->
     </dependency>
-
     <!--http://localhost:9011/swagger-ui.html-->
+
+    <!--鉴权-->
+    <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
+      <version>0.9.1</version>
+    </dependency>
+
+
   </dependencies>
 
   <build>

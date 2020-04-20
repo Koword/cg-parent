@@ -2,6 +2,7 @@ package com.changgou;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Random;
 import org.assertj.core.util.DateUtil;
@@ -56,6 +57,19 @@ public class calcTest {
         if (d1.before(d2)) {
             System.out.println(true);
         }
+    }
+
+    @Test
+    public void testEncoder() throws Exception{
+        String msg = "www.itheima.com";
+        // 编码
+        byte[] encode = Base64.getEncoder().encode(msg.getBytes("UTF-8"));
+        String encodeMsg = new String(encode, "UTF-8");
+        System.out.println("编码后：" + encodeMsg);
+        // 解码
+        byte[] decode = Base64.getDecoder().decode(encode);
+        String decodeMsg = new String(decode, "UTF-8");
+        System.out.println("解码后：" + decodeMsg);
     }
 
 }

@@ -83,7 +83,6 @@
     <orderEntry type="library" name="Maven: org.elasticsearch.plugin:parent-join-client:6.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.plugin:rank-eval-client:6.4.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.9" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.9" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.plugin:transport-netty4-client:6.4.3" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.36.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.36.Final" level="project" />
@@ -234,5 +233,7 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-devtools:2.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.1.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: io.jsonwebtoken:jjwt:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.9" level="project" />
   </component>
 </module>
