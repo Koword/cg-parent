@@ -1,7 +1,6 @@
 package com.changgou.filter;
 
-import com.changgou.util.JwtUtil;
-import io.jsonwebtoken.Claims;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -21,6 +20,7 @@ import reactor.core.publisher.Mono;
  * @Date 12:12 2020/4/20
  **/
 @Component
+@Slf4j
 public class AuthorizeFilter implements GlobalFilter, Ordered {
 
     // 定义常量
@@ -56,20 +56,27 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
         // 3.如果没有token，就不放行
         if (StringUtils.isEmpty(token)) {
             // 设置响应状态码
+            log.info("还没有登录-_-");
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();
         }
 
         // 4.token存在，需要解析token
         try {
+            /**--Jwt使用HS256加密方式--**/
             // 解析成功
-            Claims claims = JwtUtil.parseJWT(token);
+            // Claims claims = JwtUtil.parseJWT(token);
             // 手动添加头信息(调用其他微服务，需要网关，因此我们将token添加到头信息中)
-            request.mutate().header("Authorization_Token", token);
+            // request.mutate().header("Authorization_Token", token);
+
+            /**--oauth2.0 使用非对称加密RSA--**/
+            // 将令牌放入头信息中，供需要的微服务使用public.key去解析
+            request.mutate().header(AUTHORIZE_TOKEN,"bearer " + token);
         } catch (Exception e) {
             e.printStackTrace();
             // --解析失败
             // 设置响应状态码
+            log.info("存在恶意访问");
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();
         }

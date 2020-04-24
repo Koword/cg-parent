@@ -116,7 +116,7 @@ public class SkuController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<Sku> findById(@PathVariable Long id) {
+    public Result<Sku> findById(@PathVariable(name = "id") Long id) {
         //调用SkuService实现根据主键查询Sku
         Sku sku = skuService.findById(id);
         return new Result<Sku>(true, StatusCode.OK, "查询成功", sku);
@@ -134,12 +134,10 @@ public class SkuController {
     }
 
 
-
     /**
      * @Description 根据状态查询sku
      * @Author tangKai
      * @Date 16:38 2020/1/6
-     * @param status
      * @Return entity.Result
      **/
     @GetMapping(value = "/findSkusByStatus/{status}")

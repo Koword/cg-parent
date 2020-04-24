@@ -16,6 +16,7 @@
     <module>changgou-eureka</module>
     <module>changgou-common</module>
     <module>changgou-common-db</module>
+    <module>changgou-user-oauth</module>
   </modules>
 
   <parent>
@@ -77,6 +78,10 @@
       <version>0.9.1</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
 
   </dependencies>
 

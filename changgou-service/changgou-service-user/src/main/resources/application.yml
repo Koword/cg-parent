@@ -17,3 +17,9 @@ eureka:
 feign:
   hystrix:
     enabled: true
+auth:
+  ttl: 259200  #token存储到cookie的过期时间 3天
+  clientId: changgou
+  clientSecret: changgou
+  cookieDomain: localhost
+  cookieMaxAge: -1

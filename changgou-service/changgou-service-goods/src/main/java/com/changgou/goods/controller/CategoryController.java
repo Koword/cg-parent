@@ -115,7 +115,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<Category> findById(@PathVariable Integer id){
+    public Result<Category> findById(@PathVariable(name = "id") Integer id){
         //调用CategoryService实现根据主键查询Category
         Category category = categoryService.findById(id);
         return new Result<Category>(true,StatusCode.OK,"查询成功",category);

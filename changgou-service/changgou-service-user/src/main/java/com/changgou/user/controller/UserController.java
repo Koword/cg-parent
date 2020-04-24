@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,16 +39,30 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    //客户端ID
+    @Value("${auth.clientId}")
+    private String clientId;
 
+    //秘钥
+    @Value("${auth.clientSecret}")
+    private String clientSecret;
+
+    //Cookie存储的域名
+    @Value("${auth.cookieDomain}")
+    private String cookieDomain;
+
+    //Cookie生命周期
+    @Value("${auth.cookieMaxAge}")
+    private int cookieMaxAge;
 
     /**
-     * @Description 登陆
+     * @Description 登录
      * @Author tangKai
      * @Date 17:41 2020/4/16
      * @Return entity.Result
      **/
     @GetMapping("/login")
-    public Result login(String username, String password, HttpServletRequest request, HttpServletResponse response) {
+    public Result login(String username, String password, HttpServletResponse response) {
         User user = userService.findById(username);
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
             // 生成token
@@ -70,7 +84,6 @@ public class UserController {
         }
         return new Result(false, StatusCode.LOGINERROR, "账号或者密码错误");
     }
-
 
     /***
      * User分页条件搜索实现
@@ -156,8 +169,9 @@ public class UserController {
      * @param id
      * @return
      */
+//    @PreAuthorize("hasAnyAuthority('admin','user')")
     @GetMapping("/{id}")
-    public Result<User> findById(@PathVariable String id) {
+    public Result<User> findById(@PathVariable(value = "id") String id) {
         //调用UserService实现根据主键查询User
         User user = userService.findById(id);
         return new Result<User>(true, StatusCode.OK, "查询成功", user);
@@ -173,4 +187,6 @@ public class UserController {
         List<User> list = userService.findAll();
         return new Result<List<User>>(true, StatusCode.OK, "查询成功", list);
     }
+
+
 }
