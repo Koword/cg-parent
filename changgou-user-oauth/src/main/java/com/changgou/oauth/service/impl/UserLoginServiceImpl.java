@@ -14,56 +14,54 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @Description
- * @Author tangKai
- * @E-mail tangkai@qingzu.com.cn
- * @Date 15:30 2020/4/23
+ * @Author tangkai
+ * @Date 21:13 2020-4-25 0025
  **/
 @Service
 @AllArgsConstructor
 public class UserLoginServiceImpl implements UserLoginService {
 
+    // 发送请求
     RestTemplate restTemplate;
+    // 动态获取服务的实例
     LoadBalancerClient loadBalancerClient;
 
 
-    /**
-     * @param clientId 客户端id
-     * @param clientSecret 客户端秘钥
-     * @param username 用户名
-     * @param password 密码
-     * @param grant_type 授权类型
-     * @Description 登录
-     * @Author tangKai
-     * @Date 15:48 2020/4/23
-     * @Return com.changgou.oauth.util.AuthToken
-     **/
     @Override
-    public AuthToken login(String clientId, String clientSecret, String username, String password, String grant_type) {
+    public AuthToken login(String clientId, String clientSecret, String username, String password,
+        String grant_type) {
         // 生成令牌的url
         // String url = "http://localhost:9001/oauth/token";
         ServiceInstance serviceInstance = loadBalancerClient.choose("user-auth");
         String url = serviceInstance.getUri().toString() + "/oauth/token";
 
         // httpEntity:需要封装的请求体
-        MultiValueMap body = new LinkedMultiValueMap();
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.set("grant_type", grant_type);
         body.set("username", username);
         body.set("password", password);
 
-        MultiValueMap headers = new LinkedMultiValueMap();
-        // base64编码
-        String encodeMsg = httpbasic(clientId, clientSecret);
-        headers.add("Authorization", encodeMsg);
-        HttpEntity httpEntity = new HttpEntity<>(body, headers);
-
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        //                              Base64编码↓
+        headers.add("Authorization", httpbasic(clientId, clientSecret));
+        HttpEntity httpEntity = new HttpEntity(body, headers);
         // 通过RestTemplate发送请求获取到的响应数据
-        ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, Map.class);
+        ResponseEntity<Map> responseEntity = null;
+        try {
+            responseEntity = restTemplate
+                .exchange(url, HttpMethod.POST, httpEntity, Map.class);
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
         Map<String, String> map = responseEntity.getBody();
-
+        if(map == null || map.get("access_token") == null || map.get("refresh_token") == null || map.get("jti") == null) {
+            //jti是jwt令牌的唯一标识作为用户身份令牌
+            throw new RuntimeException("创建令牌失败！");
+        }
         // 将数据封装到AuthToken
         AuthToken authToken = new AuthToken();
         authToken.setAccessToken(map.get("access_token"));

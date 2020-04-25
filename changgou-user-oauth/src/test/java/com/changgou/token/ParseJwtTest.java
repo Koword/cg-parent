@@ -17,7 +17,7 @@ public class ParseJwtTest {
      * 校验令牌
      */
     @Test
-    public void testParseToken(){
+    public void testParseToken() {
         //令牌
         String token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6IlJPTEVfVklQLFJPTEVfVVNFUiIsIm5hbWUiOiJpdGhlaW1hIiwiaWQiOiIxIn0.arZkh65nquEpcKHqgk2kUcR6bM6LYIsgJG5fSXqxUrXPGRGzJ6aOUtt_6XCLgijvKiSY3gpxHDaiYTmHFULn2gZduIKeCxEXST_wMaWOaC8SWftUd19n3IwdBTg15yRVB50rZFIuCvLxEhERt8OjwJ1kt-EyohKxEk32QMFFCsU-5rI0eLduGBaQ7CthMwglVbAOJ4rpt5MehnMF-QVxc09HzeQh860YP9ohD2L3rBcBgZqTXpiiASeKy9QVjBpVqcLqWUam_sQxIUhC8lxOr-tTndQoQSq95V4gaz0rF3L7QwKlS_-NDr4vvrGAlaGvbV36dpnhRMHsii7jDentKw";
 

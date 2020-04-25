@@ -10,6 +10,7 @@ import lombok.Data;
  *****/
 @Data
 public class AuthToken implements Serializable{
+
     //令牌信息
     String accessToken;
     //刷新token(refresh_token)

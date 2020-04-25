@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>changgou-user-oauth</artifactId>
-    <description>OAuth2.0认证环境搭建</description>
+    <description>
+        OAuth2.0认证环境搭建
+    </description>
 
     <dependencies>
         <!--查询数据库数据-->
@@ -38,13 +40,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.changgou</groupId>
-            <artifactId>changgou-service-user-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
 
 </project>

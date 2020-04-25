@@ -53,12 +53,7 @@ class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // 加载数据源
-        clients.jdbc(dataSource)
-            // 查询客户端数据
-            .clients(clientDetails());
-
-        /*clients.inMemory()
+        clients.inMemory()
                 .withClient("changgou")          //客户端id
                 .secret("changgou")                      //秘钥
                 .redirectUris("http://localhost")       //重定向地址
@@ -69,7 +64,7 @@ class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
                         "client_credentials",          //客户端认证
                         "refresh_token",                //刷新令牌
                         "password")                     //密码方式认证
-                .scopes("app");                         //客户端范围，名称自定义，必填*/
+                .scopes("app");                         //客户端范围，名称自定义，必填
     }
 
     /***

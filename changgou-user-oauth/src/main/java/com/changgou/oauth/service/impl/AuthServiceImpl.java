@@ -1,9 +1,8 @@
 package com.changgou.oauth.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.changgou.oauth.service.AuthService;
 import com.changgou.oauth.util.AuthToken;
-import java.io.IOException;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -18,6 +17,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.util.Map;
 
 /*****
  * @Author: 传智播客
@@ -44,8 +46,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthToken login(String username, String password, String clientId, String clientSecret) {
         //申请令牌
-        AuthToken authToken = applyToken(username, password, clientId, clientSecret);
-        if (authToken == null) {
+        AuthToken authToken = applyToken(username,password,clientId, clientSecret);
+        if(authToken == null){
             throw new RuntimeException("申请令牌失败");
         }
         return authToken;
@@ -92,16 +94,13 @@ public class AuthServiceImpl implements AuthService {
         Map map = null;
         try {
             //http请求spring security的申请令牌接口
-            ResponseEntity<Map> mapResponseEntity = restTemplate
-                .exchange(path, HttpMethod.POST, new HttpEntity<MultiValueMap<String, String>>(formData, header),
-                    Map.class);
+            ResponseEntity<Map> mapResponseEntity = restTemplate.exchange(path, HttpMethod.POST,new HttpEntity<MultiValueMap<String, String>>(formData, header), Map.class);
             //获取响应数据
             map = mapResponseEntity.getBody();
         } catch (RestClientException e) {
             throw new RuntimeException(e);
         }
-        if (map == null || map.get("access_token") == null || map.get("refresh_token") == null
-            || map.get("jti") == null) {
+        if(map == null || map.get("access_token") == null || map.get("refresh_token") == null || map.get("jti") == null) {
             //jti是jwt令牌的唯一标识作为用户身份令牌
             throw new RuntimeException("创建令牌失败！");
         }
@@ -113,7 +112,7 @@ public class AuthServiceImpl implements AuthService {
         //刷新令牌(jwt)
         String refreshToken = (String) map.get("refresh_token");
         //jti，作为用户的身份标识
-        String jwtToken = (String) map.get("jti");
+        String jwtToken= (String) map.get("jti");
         authToken.setJti(jwtToken);
         authToken.setAccessToken(accessToken);
         authToken.setRefreshToken(refreshToken);
@@ -127,11 +126,11 @@ public class AuthServiceImpl implements AuthService {
      * @param clientSecret
      * @return
      */
-    private String httpbasic(String clientId, String clientSecret) {
+    private String httpbasic(String clientId,String clientSecret){
         //将客户端id和客户端密码拼接，按“客户端id:客户端密码”
-        String string = clientId + ":" + clientSecret;
+        String string = clientId+":"+clientSecret;
         //进行base64编码
         byte[] encode = Base64Utils.encode(string.getBytes());
-        return "Basic " + new String(encode);
+        return "Basic "+new String(encode);
     }
 }

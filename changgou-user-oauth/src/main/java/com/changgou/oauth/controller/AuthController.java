@@ -5,13 +5,16 @@ import com.changgou.oauth.util.AuthToken;
 import com.changgou.oauth.util.CookieUtil;
 import entity.Result;
 import entity.StatusCode;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletResponse;
 
 /*****
  * @Author: 传智播客
@@ -41,31 +44,31 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Result login(String username, String password) {
-        if (StringUtils.isEmpty(username)) {
+        if(StringUtils.isEmpty(username)){
             throw new RuntimeException("用户名不允许为空");
         }
-            if (StringUtils.isEmpty(password)) {
+        if(StringUtils.isEmpty(password)){
             throw new RuntimeException("密码不允许为空");
         }
         //申请令牌
-        AuthToken authToken = authService.login(username, password, clientId, clientSecret);
+        AuthToken authToken =  authService.login(username,password,clientId,clientSecret);
+
         //用户身份令牌
         String access_token = authToken.getAccessToken();
         //将令牌存储到cookie
         saveCookie(access_token);
 
-        return new Result(true, StatusCode.OK, "登录成功！", authToken);
+        return new Result(true, StatusCode.OK,"登录成功！");
     }
 
     /***
      * 将令牌存储到cookie
      * @param token
      */
-    private void saveCookie(String token) {
-        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-            .getResponse();
-        CookieUtil.addCookie(response, cookieDomain, "/", "Authorization", token, cookieMaxAge, false);
+    private void saveCookie(String token){
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        CookieUtil.addCookie(response,cookieDomain,"/","Authorization",token,cookieMaxAge,false);
     }
 }
